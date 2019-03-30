@@ -91,11 +91,22 @@
                 <div class="row">
                     <div class="col-md-12 col-12">
                         <div class="form-group">
+                            <label>Nama Kecamatan</label>
+                            <select class="form-control select2" id="id_kecamatan" name="id_kecamatan" style="width: 100%;">
+                                @foreach ($kecamatan as $value)
+                                    <option value="{{ $value->id }}">{{ $value->nm_kecamatan }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                    <div class="col-md-12 col-12 id-desa" hidden="true">
+                        <div class="form-group">
                             <label>Nama Tps</label>
                             <select class="form-control select2" id="id_desa" name="id_desa" style="width: 100%;">
-                                @foreach ($desa as $value)
+                                {{-- @foreach ($desa as $value)
                                     <option value="{{ $value->id }}">{{ $value->nm_tps }}</option>
-                                @endforeach
+                                @endforeach --}}
                             </select>
                         </div>
                         <!-- /.form-group -->
@@ -130,11 +141,22 @@
                     <input type="hidden" id="id" name="id" value="{{ old('id') }}" class="form-control" >
                     <div class="col-md-12 col-12">
                         <div class="form-group">
+                            <label>Nama Kecamatan</label>
+                            <select class="form-control select2" id="idkecamatan" name="idkecamatan" style="width: 100%;">
+                                @foreach ($kecamatan as $value)
+                                    <option value="{{ $value->id }}">{{ $value->nm_kecamatan }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                    <div class="col-md-12 col-12 iddesa" hidden="true">
+                        <div class="form-group">
                             <label>Nama Tps</label>
                             <select class="form-control select2" id="iddesa" name="iddesa" style="width: 100%;">
-                                @foreach ($desa as $value)
+                                {{-- @foreach ($desa as $value)
                                     <option value="{{ $value->id }}">{{ $value->nm_tps }}</option>
-                                @endforeach
+                                @endforeach --}}
                             </select>
                         </div>
                         <!-- /.form-group -->
@@ -271,6 +293,66 @@
                         },
                     });     
                 } 
+            });
+        });
+
+        $("#id_kecamatan").change(function() {
+            var id_kec = $('#id_kecamatan').val();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "post",
+                url: "{{ route('getdesajatim') }}",
+                data: {id_kec:id_kec},
+                dataType: "json",
+                success: function(data) {
+                    $('select[name="id_desa"]').empty();
+                    $(".id-desa").removeAttr("hidden");
+                    $.each(data, function(key, value){
+                        console.log(key);
+                        $('select[name="id_desa"]').append('<option value="'+ key +'">' + value + '</option>');
+                    });
+                    // if(data.success) {
+                    //     $('#jember').DataTable().ajax.reload();
+                    //     $('#myModal').modal('hide');
+                    //     swal("Sukses", "Berhasil Menambahkan Data Dapil VI(Jember)", "success");
+                    // }else if(data.errors) {
+                    //     swal("Gagal", data.msg, "error");
+                    // }
+                },
+            });
+        });
+
+        $("#idkecamatan").change(function() {
+            var id_kec = $('#idkecamatan').val();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "post",
+                url: "{{ route('getdesajatim') }}",
+                data: {id_kec:id_kec},
+                dataType: "json",
+                success: function(data) {
+                    $('select[name="iddesa"]').empty();
+                    $(".iddesa").removeAttr("hidden");
+                    $.each(data, function(key, value){
+                        console.log(key);
+                        $('select[name="iddesa"]').append('<option value="'+ key +'">' + value + '</option>');
+                    });
+                    // if(data.success) {
+                    //     $('#jember').DataTable().ajax.reload();
+                    //     $('#myModal').modal('hide');
+                    //     swal("Sukses", "Berhasil Menambahkan Data Dapil VI(Jember)", "success");
+                    // }else if(data.errors) {
+                    //     swal("Gagal", data.msg, "error");
+                    // }
+                },
             });
         });
     </script>
