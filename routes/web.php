@@ -29,6 +29,7 @@ Route::get('/perhitunganjember/getdata', 'PerhitunganjemberController@getPerhitu
 Route::post('/perhitunganjember/create', 'PerhitunganjemberController@create')->name('createPerhitunganjember')->middleware('auth');
 Route::post('/perhitunganjember/edit', 'PerhitunganjemberController@edit')->name('editPerhitunganjember')->middleware('auth');
 Route::post('/perhitunganjember/destroy', 'PerhitunganjemberController@destroy')->name('deletePerhitunganjember')->middleware('auth');
+Route::post('/perhitunganjember/getdropdowndesa', 'PerhitunganjemberController@getDesajember')->name('getdesajember')->middleware('auth');
 Route::get('/perhitungan', 'PerhitunganController@index')->name('perhitungan')->middleware('auth');
 Route::get('/perhitungan/getdata', 'PerhitunganController@getPerhitungan')->name('getperhitungan')->middleware('auth');
 Route::post('/perhitungan/updateSuara', 'PerhitunganController@updateSuara')->name('updateSuara')->middleware('auth');
@@ -42,6 +43,7 @@ Route::get('/perhitunganjatim/getdata', 'PerhitunganjatimController@getPerhitung
 Route::post('/perhitunganjatim/create', 'PerhitunganjatimController@create')->name('createPerhitunganjatim')->middleware('auth');
 Route::post('/perhitunganjatim/edit', 'PerhitunganjatimController@edit')->name('editPerhitunganjatim')->middleware('auth');
 Route::post('/perhitunganjatim/destroy', 'PerhitunganjatimController@destroy')->name('deletePerhitunganjatim')->middleware('auth');
+Route::post('/perhitunganjatim/getdropdowndesajatim', 'PerhitunganjatimController@getDesajatim')->name('getdesajatim')->middleware('auth');
 Route::get('/rekapjatim', 'RekapjatimController@index')->name('rekapjatim')->middleware('auth');
 Route::get('/rekapjatim/getdata', 'RekapjatimController@getPerhitungan')->name('getrekapjatim')->middleware('auth');
 Route::post('/rekapjatim/updateSuara', 'RekapjatimController@updateSuara')->name('updateSuarajatim')->middleware('auth');
@@ -50,7 +52,3 @@ Route::get('/tps/gettps', 'TpsController@getTps')->name('gettps')->middleware('a
 Route::post('/tps/create', 'TpsController@create')->name('createTps')->middleware('auth');
 Route::post('/tps/edit', 'TpsController@edit')->name('editTps')->middleware('auth');
 Route::post('/tps/destroy', 'TpsController@destroy')->name('deleteTps')->middleware('auth');
-
-// Route::get('/home', function () {
-//     auth()->user()->assignRole('Admin');
-// });
