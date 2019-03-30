@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\PerhitunganJatim;
 use App\Desa;
 use App\Tps;
+use App\Kecamatan;
+
 
 
 class PerhitunganjatimController extends Controller
@@ -23,8 +25,9 @@ class PerhitunganjatimController extends Controller
 
     public function index()
     {
-        $desa = Tps::all();
-        return view('perhitunganjatim.index', compact('desa'));
+        // $desa = Tps::all();
+        $kecamatan = Kecamatan::DropdownkecamatanAll();
+        return view('perhitunganjatim.index', compact('kecamatan'));
     }
 
     /**
@@ -48,11 +51,9 @@ class PerhitunganjatimController extends Controller
             } else {
                 return response()->json(['errors' => '1', 'msg' => 'Data Tps Sudah Ada']);
             }
-
         } catch (Exception $e) {
             return response()->json(['errors' => '1', 'msg' => "Gagal Menambahkan Data Dapil V(Jember-Lumajang)"]);
         }
-
     }
 
     /**
@@ -91,7 +92,6 @@ class PerhitunganjatimController extends Controller
 
             if ($perhitungan->save()) {
                 return response()->json(['success' => '1']);
-
             }
 
             return response()->json(['errors' => '1']);
@@ -135,5 +135,22 @@ class PerhitunganjatimController extends Controller
         $perhitungan = PerhitunganJatim::Listperhitungan();
 
         return response()->json(array('data' => $perhitungan));
+    }
+
+    public function getDesajatim(Request $request)
+    {
+        $id_kec = $request->id_kec;
+        $desa = Desa::Listdropdownjatim($id_kec);
+        if ($desa != []) {
+            $result = json_decode($desa, true);
+            $arrdesa = array();
+            foreach ($result as $key => $value) {
+                $arrdesa[$value['id']] = $value['nm_desa'] . '-' . $value['nm_tps'];
+            }
+        } else {
+            $arrdesa = array();
+        }
+        // var_dump(json_encode($arrdesa));
+        return json_encode($arrdesa);
     }
 }

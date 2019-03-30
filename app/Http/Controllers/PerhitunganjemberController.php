@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Perhitungan;
 use App\Desa;
+use App\Kecamatan;
+use function GuzzleHttp\json_encode;
+
 
 
 class PerhitunganjemberController extends Controller
@@ -21,9 +24,8 @@ class PerhitunganjemberController extends Controller
 
     public function index()
     {
-        $desa = Desa::Dropdowndesa();
-        return view('perhitunganjember.index', compact('desa'));
-
+        $kecamatan = Kecamatan::Dropdownkecamatan();
+        return view('perhitunganjember.index', compact('kecamatan'));
     }
 
     /**
@@ -46,11 +48,9 @@ class PerhitunganjemberController extends Controller
             } else {
                 return response()->json(['errors' => '1', 'msg' => 'Data Tps Sudah Ada']);
             }
-
         } catch (Exception $e) {
             return response()->json(['errors' => '1']);
         }
-
     }
 
     /**
@@ -89,7 +89,6 @@ class PerhitunganjemberController extends Controller
 
             if ($perhitungan->save()) {
                 return response()->json(['success' => '1']);
-
             }
 
             return response()->json(['errors' => '1']);
@@ -133,5 +132,22 @@ class PerhitunganjemberController extends Controller
         $perhitungan = Perhitungan::Listperhitungan();
 
         return response()->json(array('data' => $perhitungan));
+    }
+
+    public function getDesajember(Request $request)
+    {
+        $id_kec = $request->id_kec;
+        $desa = Desa::Listdropdownjatim($id_kec);
+        if ($desa != []) {
+            $result = json_decode($desa, true);
+            $arrdesa = array();
+            foreach ($result as $key => $value) {
+                $arrdesa[$value['id']] = $value['nm_desa'] . '-' . $value['nm_tps'];
+            }
+        } else {
+            $arrdesa = array();
+        }
+        // var_dump(json_encode($arrdesa));
+        return json_encode($arrdesa);
     }
 }
