@@ -19,10 +19,10 @@ class PerhitunganJatim extends Model
             ->join('kabupaten', 'kecamatan.id_kab', '=', 'kabupaten.id')
             ->select('perhitungan_jatim.*', 'kecamatan.nm_kecamatan', 'desa.nm_desa', 'kabupaten.nm_kabupaten', 'tps.nm_tps')
             ->where('status', 1)
-            ->orderBy('kabupaten.id', 'desc')
-            ->orderBy('kecamatan.id', 'desc')
-            ->orderBy('desa.id', 'desc')
-            ->orderBy('id', 'desc')
+            ->orderBy('kabupaten.id', 'asc')
+            ->orderBy('kecamatan.id', 'asc')
+            ->orderBy('desa.id', 'asc')
+            ->orderBy('id', 'asc')
             ->get();
         return $perhitungan;
     }
@@ -36,10 +36,10 @@ class PerhitunganJatim extends Model
             ->join('kabupaten', 'kecamatan.id_kab', '=', 'kabupaten.id')
             ->select('perhitungan_jatim.*', 'kecamatan.nm_kecamatan', 'desa.nm_desa', 'kabupaten.nm_kabupaten', 'tps.nm_tps')
             ->where(['status' => 1, 'desa.id' => $id_desa])
-            ->orderBy('kabupaten.id', 'desc')
-            ->orderBy('kecamatan.id', 'desc')
-            ->orderBy('desa.id', 'desc')
-            ->orderBy('id', 'desc')
+            ->orderBy('kabupaten.id', 'asc')
+            ->orderBy('kecamatan.id', 'asc')
+            ->orderBy('desa.id', 'asc')
+            ->orderBy('id', 'asc')
             ->get();
         return $perhitungan;
     }
@@ -53,10 +53,10 @@ class PerhitunganJatim extends Model
             ->join('kabupaten', 'kecamatan.id_kab', '=', 'kabupaten.id')
             ->select('perhitungan_jatim.*', 'kecamatan.nm_kecamatan', 'desa.nm_desa', 'kabupaten.nm_kabupaten', 'tps.nm_tps')
             ->where('status', 1)
-            ->orderBy('perhitungan_jatim.id', 'desc')
-            ->orderBy('kecamatan.id', 'desc')
-            ->orderBy('desa.id', 'desc')
-            ->orderBy('id', 'desc')
+            ->orderBy('perhitungan_jatim.id', 'asc')
+            ->orderBy('kecamatan.id', 'asc')
+            ->orderBy('desa.id', 'asc')
+            ->orderBy('id', 'asc')
             ->get();
         return $perhitungan;
     }
@@ -107,5 +107,4 @@ class PerhitunganJatim extends Model
             ->get();
         return $rekapitulasi;
     }
-
 }

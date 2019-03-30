@@ -47,4 +47,34 @@ class Desa extends Model
             ->first();
         return $perhitungan;
     }
+
+    public static function Listdropdown($id_kec)
+    {
+        $perhitungan = DB::table('tps')
+            ->join('desa', 'tps.id_desa', '=', 'desa.id')
+            ->join('kecamatan', 'desa.id_kec', '=', 'kecamatan.id')
+            ->join('kabupaten', 'kecamatan.id_kab', '=', 'kabupaten.id')
+            ->select('tps.*', 'desa.nm_desa')
+            ->where(['kabupaten.id' => 2, 'kecamatan.id' => $id_kec])
+            ->orderBy('kabupaten.id', 'desc')
+            ->orderBy('kecamatan.id', 'desc')
+            ->orderBy('id', 'desc')
+            ->get();
+        return $perhitungan;
+    }
+
+    public static function Listdropdownjatim($id_kec)
+    {
+        $perhitungan = DB::table('tps')
+            ->join('desa', 'tps.id_desa', '=', 'desa.id')
+            ->join('kecamatan', 'desa.id_kec', '=', 'kecamatan.id')
+            ->join('kabupaten', 'kecamatan.id_kab', '=', 'kabupaten.id')
+            ->select('tps.*', 'desa.nm_desa')
+            ->where(['kecamatan.id' => $id_kec])
+            ->orderBy('kabupaten.id', 'desc')
+            ->orderBy('kecamatan.id', 'desc')
+            ->orderBy('id', 'desc')
+            ->get();
+        return $perhitungan;
+    }
 }

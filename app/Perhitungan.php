@@ -17,11 +17,11 @@ class Perhitungan extends Model
             ->join('desa', 'tps.id_desa', '=', 'desa.id')
             ->join('kecamatan', 'desa.id_kec', '=', 'kecamatan.id')
             ->join('kabupaten', 'kecamatan.id_kab', '=', 'kabupaten.id')
-            ->select('perhitungan.*', 'kecamatan.nm_kecamatan', 'desa.nm_desa', 'kabupaten.nm_kabupaten', 'tps.nm_tps')
+            ->select('perhitungan.*', 'kecamatan.id as id_kec', 'kecamatan.nm_kecamatan', 'desa.nm_desa', 'kabupaten.nm_kabupaten', 'tps.nm_tps')
             ->where('status', 1)
-            ->orderBy('kecamatan.id', 'desc')
-            ->orderBy('desa.id', 'desc')
-            ->orderBy('id', 'desc')
+            ->orderBy('kecamatan.id', 'asc')
+            ->orderBy('desa.id', 'asc')
+            ->orderBy('id', 'asc')
             ->get();
         return $perhitungan;
     }
@@ -37,8 +37,8 @@ class Perhitungan extends Model
             ->where(['status' => 1, 'desa.id' => $id_desa])
             // ->where('status', 1)
             // ->where('desa.id', 13)
-            ->orderBy('kecamatan.id', 'desc')
-            ->orderBy('id', 'desc')
+            ->orderBy('kecamatan.id', 'asc')
+            ->orderBy('id', 'asc')
             ->get();
         return $perhitungan;
     }
@@ -83,5 +83,4 @@ class Perhitungan extends Model
             ->get();
         return $rekapitulasi;
     }
-
 }
