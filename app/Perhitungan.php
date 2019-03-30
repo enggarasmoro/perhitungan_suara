@@ -19,6 +19,7 @@ class Perhitungan extends Model
             ->join('kabupaten', 'kecamatan.id_kab', '=', 'kabupaten.id')
             ->select('perhitungan.*', 'kecamatan.id as id_kec', 'kecamatan.nm_kecamatan', 'desa.nm_desa', 'kabupaten.nm_kabupaten', 'tps.nm_tps')
             ->where('status', 1)
+            ->orderBy('nm_tps', 'asc')
             ->orderBy('kecamatan.id', 'asc')
             ->orderBy('desa.id', 'asc')
             ->orderBy('id', 'asc')
@@ -37,6 +38,7 @@ class Perhitungan extends Model
             ->where(['status' => 1, 'desa.id' => $id_desa])
             // ->where('status', 1)
             // ->where('desa.id', 13)
+            ->orderBy('nm_tps', 'asc')
             ->orderBy('kecamatan.id', 'asc')
             ->orderBy('id', 'asc')
             ->get();
